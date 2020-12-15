@@ -38,8 +38,21 @@
         <% var photo =  photos[i] ; %>
         <div class="photo">
           <h2><%= photo.title %></h2>
+          <h5>tags: <%= photo.image.tags %></h5>
           <a href="<%= cloudinary.url(photo.image.public_id)%>" target="_blank">
-            <%-cloudinary.image(photo.image.public_id, {width: 150, height: 150, quality: 80,format:'jpg',class:'thumbnail inline'})%>
+            <%-cloudinary.image(photo.image.public_id, {width: 500, height: 500, quality: 80,format:'jpg',class:'thumbnail inline'})%>
+            <%-cloudinary.image(photo.image.public_id, {overlay: {url: "https://res.cloudinary.com/demo/image/upload/logos/cloudinary_full_logo_white_small.png"}, effect: "brightness:150", flags: "relative", width: "0.6", opacity: 70}) %>
+            <%-cloudinary.image(photo.image.public_id, {effect: "saturation:50"}) %>
+
+            <!-- <%-cloudinary.image(photo.image.public_id, {overlay: "cloudinary_icon_white", width: 300, gravity: "north_east", opacity: 60})%> -->
+
+            <!-- <%-cloudinary.image(photo.image.public_id, {transformation: [
+              {x: 355, y: 410, width: 300, height: 200, crop: "crop"},
+              {width: 130, height: 100, crop: "fill"},
+              {angle: 20},
+              {width: "0.5", crop: "scale"}
+              ]})%> -->
+
           </a>
 
           <div class="less_info">

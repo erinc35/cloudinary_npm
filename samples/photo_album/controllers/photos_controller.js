@@ -39,7 +39,7 @@ function create_through_server(req, res) {
   }
 
   var photo = new Photo(req.body);
-  // Get temp file path
+  // Get temp file path)
   var imageFile = req.files.image.path;
   // Upload file to Cloudinary
   cloudinary.uploader.upload(imageFile, { tags: 'express_sample' })
@@ -47,15 +47,29 @@ function create_through_server(req, res) {
       console.log('** file uploaded to Cloudinary service');
       console.dir(image);
       photo.image = image;
+
+      cloudinary.uploader.add_tag('new_tag', [image.public_id])
+        .then(function () {
+          cloudinary.api.tags()
+            .then( function(res) {
+              photo.image.tags = Array.from(res.tags)
+              photo.save()
+            })
+      })
+        
+      
       // Save photo with image metadata
+      // console.log('image', image)
       return photo.save();
     })
     .then(function () {
       console.log('** photo saved');
+
     })
     .finally(function () {
-      res.render('photos/create_through_server', { photo: photo, upload: photo.image });
+      res.render('photos/create_through_server', { photo: photo, upload: photo.image});
     });
+
 }
 
 function add_direct(req, res) {
@@ -157,7 +171,8 @@ module.exports.wire = function (app) {
   // index
   app.get('/', index);
   app.get('/photos', index);
-
+  
+  
   // upload to server example
   app.get('/photos/add', add_through_server);
   app.post('/photos', multipartMiddleware, create_through_server);
