@@ -71,7 +71,6 @@ exports.unsigned_upload = function unsigned_upload(file, upload_preset, callback
 
 exports.upload = function upload(file, callback) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
   return call_api("upload", callback, options, function () {
     var params = build_upload_params(options);
     return isRemoteUrl(file) ? [params, { file: file }] : [params, {}, file];

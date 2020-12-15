@@ -1,5 +1,6 @@
 const fs = require('fs');
 const os = require('os');
+os.tmpDir = os.tmpdir
 const defaults = require('lodash/defaults');
 const cloudinary = require("../../cloudinary");
 const helper = require("../spechelper");
